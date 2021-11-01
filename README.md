@@ -36,7 +36,7 @@ Firstly, for the use this library you have to create an API via Binance. This do
                         pip install binance-connector
                         
 - You can now download and start using and developing the library.
-- Don't forget to sen message me for any mistake. waiting for your forks and don't forget give star :)
+- Don't forget to sen message me for any mistake. Don't forget give star. I waiting for your pull requests (Froks) :)
 
 # License
 
