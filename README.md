@@ -7,7 +7,9 @@ Exchange indicators &amp; Basic functions for Binance API.
 # Usage
 Firstly, for the use this library you have to create an API via Binance. This documentation will help you for create an safe API.
 
-1) Visit the Binance Web Site. (https://www.binance.com/)
+1) [Visit the Binance Web Site.](https://www.binance.com/)
+            
+            https://www.binance.com/
 
 # License
 
