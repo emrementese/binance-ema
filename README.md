@@ -22,9 +22,11 @@ Firstly, for the use this library you have to create an API via Binance. This do
 
    ![](https://github.com/emrementese/binance-ema/blob/main/examples/images/binance-api-settings.png)
    
-> Enable Reading was default active. This settings give you authority for reading the coins information. (Red circle in the image)
-> Enable Spot-Marign Trading was default passive. !! IF YOU DON'T SPOT-MARGİN TRADİNG, YOU MUST DON'T ACTİVE THİS SETTİNG FOR YOUR SECURİTY. (Green circle in the image)
-> Trusted IP
+* Enable Reading was default active. This settings give you authority for reading the coins information. (Red circle in the image)
+* Enable Spot-Marign Trading was default passive. !! IF YOU DON'T SPOT-MARGİN TRADİNG, YOU MUST DON'T ACTİVE THİS SETTİNG FOR YOUR SECURİTY. (Green circle in the image)
+* Trusted IP default null. You must add your ip adress here for your security. Other ip adress cannot read coins information or trade.
+
+            You can use this libary now but you need original binance-connector libary for connect to your API.
 
 # License
 
