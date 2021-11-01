@@ -15,7 +15,10 @@ Firstly, for the use this library you have to create an API via Binance. This do
    ![](https://github.com/emrementese/binance-ema/blob/main/examples/images/menu.png)
 
 
-3) Third, you can create an API now. After the API creatation,  move the API List and click the edit button your API. Page looks like;
+3) Third, you can create an API now. After the API creatation,  move the API List and click the edit button your API. 
+
+- After the API creatation, save your "API KEY" & "SECURİTY KEY".
+- Page looks like;
 
    ![](https://github.com/emrementese/binance-ema/blob/main/examples/images/binance-api-settings.png)
 
