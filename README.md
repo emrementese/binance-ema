@@ -31,7 +31,7 @@ Firstly, for the use this library you have to create an API via Binance. This do
 > Binance Connector
 - Github Referance for Binance Connector  -->https://github.com/binance/binance-connector-python
 - Original Binance Connector Document     --> https://binance-docs.github.io/apidocs/spot/en/#introduction
-- Referans 3 --> https://binance-connector.readthedocs.io/en/stable/
+- Referance 3 --> https://binance-connector.readthedocs.io/en/stable/
 
                         pip install binance-connector
 # License
