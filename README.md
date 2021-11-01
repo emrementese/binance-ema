@@ -6,7 +6,7 @@ Exchange indicators &amp; Basic functions for Binance API.
 
 # Usage
 
-
+    Firstly, for the use this library you have to create an api via binance.
 
 # License
 
