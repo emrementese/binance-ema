@@ -27,6 +27,9 @@ Firstly, for the use this library you have to create an API via Binance. This do
 * Trusted IP default null. You must add your ip adress here for your security. Other ip adress cannot read coins information or trade.
 
             You can use this libary now but you need original binance-connector libary for connect to your API.
+            
+> Binance Connector
+
 
 # License
 
