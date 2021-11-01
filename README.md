@@ -39,9 +39,16 @@ Firstly, for the use this library you have to create an API via Binance. This do
 - Don't forget to sen message me for any mistake. Don't forget give star. I waiting for your pull requests (Forks) :)
 
 ## Examples
-```
+```py
+
 # example connect to API
 
+from binance.spot import Spot as Client
+
+KEY         = "XXXXXXXXXXXXXXXXXXXXXXXXXX"
+SECRET      = "XXXXXXXXXXXXXXXXXXXXXXXXXX"
+
+connection = Client(KEY,SECRET)
 
 ```
 
