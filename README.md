@@ -29,7 +29,8 @@ Firstly, for the use this library you have to create an API via Binance. This do
             You can use this libary now but you need original binance-connector libary for connect to your API.
             
 > Binance Connector
-
+- Github Referance for Binance Connector  -->https://github.com/binance/binance-connector-python
+- Original Binance Connector Document     --> https://binance-docs.github.io/apidocs/spot/en/#introduction
 
 # License
 
