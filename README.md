@@ -10,7 +10,8 @@ Firstly, for the use this library you have to create an API via Binance. This do
 1) [Visit the Binance web site and log in.](https://www.binance.com/)
             
             https://www.binance.com/
-2) After, 
+2) After, click to your profile photo. Select api management from the menu that appears.
+
 
 # License
 
