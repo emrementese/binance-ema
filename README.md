@@ -39,7 +39,11 @@ Firstly, for the use this library you have to create an API via Binance. This do
 - Don't forget to sen message me for any mistake. Don't forget give star. I waiting for your pull requests (Forks) :)
 
 ## Examples
+```
+# example connect to API
 
+
+```
 
 # License
 
