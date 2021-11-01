@@ -34,6 +34,10 @@ Firstly, for the use this library you have to create an API via Binance. This do
 - Referance 3 --> https://binance-connector.readthedocs.io/en/stable/
 
                         pip install binance-connector
+                        
+- You can now download and start using and developing the library.
+- Don't forget to sen message me for any mistake. waiting for your forks and don't forget give star :)
+
 # License
 
 
