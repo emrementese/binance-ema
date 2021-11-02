@@ -168,8 +168,13 @@ class indicator:
     def symbol_quantity(self,symbol):
         '''
         * Get your coins quantitiy or balance.
-        * locked  --> coins quantity in order
-        * balance -->  free coins quantity * price  (no locked)
+
+        - Input
+            * Coin symbol: BTC , DENT , ETH , TROY
+
+        - Outputs
+            * locked  --> coins quantity in order
+            * balance -->  free coins quantity * price usd  (no locked)
         '''
         if symbol == "USDT":
             raise Exception("Symbol Error: Use balance_usdt function.")
