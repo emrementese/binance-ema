@@ -45,6 +45,7 @@ Firstly, for the use this library you have to create an API via Binance. This do
 # example connect to API
 
 from binance.spot import Spot as Client
+from binancema.indicators import indicator
 
 KEY         = "XXXXXXXXXXXXXXXXXXXXXXXXXX"
 SECRET      = "XXXXXXXXXXXXXXXXXXXXXXXXXX"
