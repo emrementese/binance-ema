@@ -44,16 +44,33 @@ Firstly, for the use this library you have to create an API via Binance. This do
 
 # example connect to API
 
-from binance.spot import Spot as Client
+from binance.spot import Spot
 from binancema.indicators import indicator
+from binancema.coininfo import *
 
-KEY         = "XXXXXXXXXXXXXXXXXXXXXXXXXX"
-SECRET      = "XXXXXXXXXXXXXXXXXXXXXXXXXX"
+KEY         = "XXXXXXXXXXXXXXXXXXXXXX"
+SECRET      = "XXXXXXXXXXXXXXXXXXXXXX"
 
-connection = Client(KEY,SECRET)  # connect binance api
-functions = indicator(connection) #connect the binance-ema libary
-btc = functions.PRICE("BTCUSDT") # use libary functions
-print(btc)
+Client = Spot(KEY,SECRET)  # connect binance api
+functions = indicator(Client) #connect the binance-ema libary
+
+# default binance-connector
+print(f"Server Time: {Client.time()['serverTime']}")
+
+# use libary binancema
+print(f"Your USDT ($) Balance:                  {balance_usdt(Client)} $")
+print(f"OXT Quantity (Free):                    {quantity_free(Client,'OXT')} OXT")
+print(f"OXT Quantity (locked):                  {quantity_locked(Client,'OXT')} OXT")
+print(f"OXT Quantity (all):                     {quantity_all(Client,'OXT')} OXT")
+print(f"OXT Balance (free):                     {balance_free(Client,'OXT')} $")
+print(f"OXT Balance (locked):                   {balance_locked(Client,'OXT')} $")
+print(f"OXT Balance (all):                      {balance_all(Client,'OXT')} $")
+print(f"OXT/USDT Price (now):                   {price(Client,'OXTUSDT')} $")
+print(f"OXT/USDT Price (before 24hr):           {price_before_24hr(Client,'OXTUSDT')} $")
+print(f"OXT/USDT Price Change Value (24hr):     {price_change24(Client,'OXTUSDT')} $")
+print(f"OXT/USDT Price Change (%) (24hr):       % {price_change_percent24(Client,'OXTUSDT')}") 
+print(f"OXT/USDT Price High Value (24hr):       {price_high24(Client,'OXTUSDT')} $") 
+print(f"OXT/USDT Price Low Value (24hr):        {price_low24(Client,'OXTUSDT')} $")
 
 ```
 
