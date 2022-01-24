@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 '''
 Created by Emre MENTESE on 24/01/2022
 Coding with Python.

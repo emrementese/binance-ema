@@ -1,3 +1,9 @@
+# -*- coding: utf-8 -*-
+'''
+Created by Emre MENTESE on 24/01/2022
+Coding with Python.
+'''
+
 from binance.spot import Spot
 from binancema.indicators import indicator
 from binancema.coininfo import *
