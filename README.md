@@ -77,5 +77,5 @@ print(f"OXT/USDT Price Low Value (24hr):        {price_low24(Client,'OXTUSDT')}"
 # License
 
 
-    MIT License | Copyright (c) 2021 Emre MENTEŞE
+    MIT License | Copyright (c) 2022 Emre MENTEŞE
 
