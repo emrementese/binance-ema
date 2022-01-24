@@ -1,14 +1,14 @@
 '''
-Created by Emre MENTESE on 01/11/2021
+Created by Emre MENTESE on 24/01/2022
 Coding with Python.
 '''
-
+from coininfo import PRICE
 class indicator:
 
     def __init__(self,client):
         self.client = client
 
-    def SMA(self,series,length):
+    def SMA(self,series,length) -> float:
         '''
         * Simple Moving Average
         * Referance (01/11/2021): https://www.tradingview.com/pine-script-reference/#fun_sma
@@ -38,7 +38,7 @@ class indicator:
             raise Exception("SMA Calculating Error: series must be integer & float or list.")
 
         
-    def EMA(self,close,length,previous_ema):
+    def EMA(self,close,length,previous_ema) -> float:
         '''
         * Exponential Moving Avarage 
         * Referance (01/11/2021): https://www.tradingview.com/pine-script-reference/#fun_ema 
@@ -81,22 +81,22 @@ class indicator:
         return ema
 
 
-    def coins_instant_ema(self,length,previous_ema,symbol):
+    def coins_instant_ema(self,length,previous_ema,symbol) -> float:
         '''
         * This function return instant ema using with the ema of the previous candlestick bars
 
         Note:
             * When the graphic move to a next candlestick bars you have to change the ema and run it again !
-            * This function can't calculating next candlestick bars's ema. İt can just return instant ema !
+            * This function can't calculating next candlestick bars's ema. İt can just return instant (dynamic) ema !
 
         Examples
         - symbol = "BTCUSDT"
         - length = 9
-        - previous_ema = 62017.40
+        - previous_ema (9) = 62017.40
         
         '''
 
-        close_value = self.PRICE(symbol)
+        close_value = PRICE(symbol)
         return self.EMA(close_value,length,previous_ema)
 
 
@@ -140,50 +140,5 @@ class indicator:
         - previous_ema_slow
         - previous_macd = 62017.40
         '''
-        close = self.PRICE(symbol)
+        close = PRICE(symbol)
         return self.MACD(close,fast,slow,signal,previous_ema_fast,previous_ema_slow,previous_macd)
-
-    
-    def PRICE(self,symbol):
-        '''
-        * This function return the instant price the symbol.
-
-        - Example:  BTCUSDT -> 62000 ($) Float
-        '''
-        data = self.client.ticker_price(symbol)
-        return float(data['price'])
-
-
-    def balance_usdt(self):
-        '''
-        * Get your account balance USDT ($)
-        '''
-        hesap = self.client.account()
-        for coin in hesap['balances']:
-            if coin['asset'] == 'USDT':
-                return float(coin['free'])
-            else:
-                continue
-    
-    def symbol_quantity(self,symbol):
-        '''
-        * Get your coins quantitiy or balance.
-
-        - Input
-            * Coin symbol: BTC , DENT , ETH , TROY
-
-        - Outputs
-            * locked  --> coins quantity in order
-            * balance -->  free coins quantity * price usd  (no locked)
-        '''
-        if symbol == "USDT":
-            raise Exception("Symbol Error: Use balance_usdt function.")
-
-        hesap = self.client.account()
-        for coin in hesap['balances']:
-            if coin['asset'] == symbol:
-                fiyat = float(self.client.ticker_price(symbol + "USDT")['price'])
-                bakiye =  float(coin['free']) * fiyat
-                return {"symbol":symbol, "quantity": float(coin['free']),"locked":float(coin['locked']),"balance_usdt":bakiye}
-            else:
-                continue
