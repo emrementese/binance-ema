@@ -2,7 +2,7 @@
 Created by Emre MENTESE on 24/01/2022
 Coding with Python.
 '''
-from coininfo import PRICE
+from coininfo import price
 class indicator:
 
     def __init__(self,client):
@@ -96,7 +96,7 @@ class indicator:
         
         '''
 
-        close_value = PRICE(symbol)
+        close_value = price(self.client,symbol)
         return self.EMA(close_value,length,previous_ema)
 
 
@@ -140,5 +140,5 @@ class indicator:
         - previous_ema_slow
         - previous_macd = 62017.40
         '''
-        close = PRICE(symbol)
+        close = price(self.client,symbol)
         return self.MACD(close,fast,slow,signal,previous_ema_fast,previous_ema_slow,previous_macd)

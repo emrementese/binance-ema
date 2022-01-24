@@ -37,7 +37,7 @@ def balance_usdt(client) -> float:
             else:
                 continue
 
-def PRICE(client,symbol) -> float:
+def price(client,symbol) -> float:
         '''
         * This function return the instant price the symbol.
 
