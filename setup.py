@@ -10,6 +10,12 @@ DESCRIPTION = ("Get crypto coin informations & calculate the custom or constant 
 AUTHOR = "Emre MENTESE"
 URL = "https://github.com/emrementese/binance-ema"
 VERSION = "0.1.4"
+URLS = {
+  'MyWebsite': 'http://www.emrementese.com/',
+  'Github': 'https://github.com/emrementese',
+  'Source': 'https://github.com/emrementese/binance-ema',
+  'Download': 'https://pypi.org/project/binance-ema/#files',
+}
 
 setup(
     name=NAME,
@@ -20,6 +26,7 @@ setup(
     long_description_content_type="text/markdown",
     author=AUTHOR,
     author_email= "emrmentese@gmail.com",
+    project_urls = URLS,
     url=URL,
     keywords=["Binance", "Public API","EMA","MACD","TRADE","Crypto","Coin","Indicators","BTC","ETH","USDT"],
     install_requires=[
