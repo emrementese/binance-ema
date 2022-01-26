@@ -8,11 +8,11 @@ with open(path,"r") as req_files:
     requirements = req_files.readlines()
 
 with open("README.md", "r") as readme_file:
-    about["long_description"] = readme_file.read()
+    readme = readme_file.read()
 
 NAME = "binance-ema"
 DESCRIPTION = ("Get crypto coin informations & calculate the custom or constant indicators. (WITH BINANCE API)")
-AUTHOR = "Emre MENTESE <emrmentese@gmail.com>"
+AUTHOR = "Emre MENTESE"
 URL = "https://github.com/emrementese/binance-ema"
 VERSION = "0.1.0"
 
@@ -21,13 +21,15 @@ setup(
     version=VERSION,
     license="MIT",
     description=DESCRIPTION,
-    long_description=about["long_description"],
+    long_description=readme,
     long_description_content_type="text/markdown",
-    AUTHOR=AUTHOR,
+    author=AUTHOR,
+    author_email= "emrmentese@gmail.com",
     url=URL,
     keywords=["Binance", "Public API","EMA","MACD","TRADE","Crypto","Coin","Indicators","BTC","ETH","USDT"],
     install_requires=[req for req in requirements],
-    packages=find_packages(exclude=("binancema",)),
+    packages=find_packages('binancema'),
+    package_dir={'': 'binancema'},
     classifiers=[
         "Intended Audience :: Developers",
         "Intended Audience :: Financial and Insurance Industry",
