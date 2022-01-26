@@ -1,11 +1,6 @@
 from setuptools import setup, find_packages
-import os
-path = os.path.join(os.path.dirname(__file__),"requirements.txt")
 
 about = {}
-
-with open(path,"r") as req_files:
-    requirements = req_files.readlines()
 
 with open("README.md", "r") as readme_file:
     readme = readme_file.read()
@@ -27,7 +22,32 @@ setup(
     author_email= "emrmentese@gmail.com",
     url=URL,
     keywords=["Binance", "Public API","EMA","MACD","TRADE","Crypto","Coin","Indicators","BTC","ETH","USDT"],
-    install_requires=[req for req in requirements],
+    install_requires=[
+        "attrs==21.4.0",
+        "autobahn==21.11.1",
+        "Automat==20.2.0",
+        "binance-connector==1.10.0",
+        "certifi==2021.10.8",
+        "cffi==1.15.0",
+        "charset-normalizer==2.0.10",
+        "constantly==15.1.0",
+        "cryptography==36.0.1",
+        "hyperlink==21.0.0",
+        "idna==3.3",
+        "incremental==21.3.0",
+        "pyasn1==0.4.8",
+        "pyasn1-modules==0.2.8",
+        "pycparser==2.21",
+        "pyOpenSSL==21.0.0",
+        "requests==2.27.1",
+        "service-identity==21.1.0",
+        "six==1.16.0",
+        "Twisted==21.7.0",
+        "txaio==21.2.1",
+        "typing_extensions==4.0.1",
+        "urllib3==1.26.8",
+        "zope.interface==5.4.0",
+    ],
     packages=find_packages('binancema'),
     package_dir={'': 'binancema'},
     classifiers=[
