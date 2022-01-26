@@ -5,8 +5,7 @@ Simplified & Professional Binance API.
 - Get account information (balance,quantity etc.)
 - Buy / Sell / Limit / Stop Loss --> Orders any way.
 - Calculate SMA, EMA, MACD etc. functions (custom indicators)
-
-           https://pypi.org/project/binance-ema/
+- https://pypi.org/project/binance-ema/
            
            pip install binance-ema
            
