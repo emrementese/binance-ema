@@ -1,4 +1,4 @@
-from setuptools import setup, find_packages
+from setuptools import setup
 import os
 path = os.path.join(os.path.dirname(__file__),"requirements.txt")
 
@@ -28,8 +28,7 @@ setup(
     url=URL,
     keywords=["Binance", "Public API","EMA","MACD","TRADE","Crypto","Coin","Indicators","BTC","ETH","USDT"],
     install_requires=[req for req in requirements],
-    packages=find_packages('binancema'),
-    package_dir={'': 'binancema'},
+    packages='binancema',
     classifiers=[
         "Intended Audience :: Developers",
         "Intended Audience :: Financial and Insurance Industry",
