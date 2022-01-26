@@ -48,8 +48,8 @@ setup(
         "urllib3==1.26.8",
         "zope.interface==5.4.0",
     ],
-    packages=find_packages('binancema'),
-    package_dir={'': 'binancema'},
+    packages=find_packages('src'),
+    package_dir={'':'src'},
     classifiers=[
         "Intended Audience :: Developers",
         "Intended Audience :: Financial and Insurance Industry",
