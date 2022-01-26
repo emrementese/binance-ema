@@ -2,11 +2,13 @@ from setuptools import setup, find_packages
 import os
 path = os.path.join(os.path.dirname(__file__),"requirements.txt")
 
+about = {}
+
 with open(path,"r") as req_files:
     requirements = req_files.readlines()
 
 with open("README.md", "r") as readme_file:
-    readme = readme_file.read()
+    about["long_description"] = readme_file.read()
 
 NAME = "binance-ema"
 DESCRIPTION = ("Get crypto coin informations & calculate the custom or constant indicators. (WITH BINANCE API)")
@@ -19,7 +21,7 @@ setup(
     version=VERSION,
     license="MIT",
     description=DESCRIPTION,
-    long_description=readme,
+    long_description=about["long_description"],
     long_description_content_type="text/markdown",
     AUTHOR=AUTHOR,
     url=URL,
