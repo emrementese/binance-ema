@@ -4,11 +4,11 @@ Created by Emre MENTESE on 24/01/2022
 Coding with Python.
 '''
 
+from lib2to3.pygram import Symbols
+
+
 def decorator_quantity(func):
     def inner(client,symbol):
-        if symbol == "USDT":
-            raise Exception("Symbol Error: Use balance_usdt function.")
-
         Account = client.account()
         for coin in Account['balances']:
             if coin['asset'] != symbol:
@@ -114,7 +114,11 @@ def price(client,symbol) -> float:
     '''
     * This function return the instant price value the symbol.
 
-    - Example:  BTCUSDT -> 62000 ($) Float
+    - Input
+        * Coin market: BTCUSDT
+
+    - Outputs
+        * instant price value  -> Float
     '''
     return float(client.ticker_price(symbol)['price'])
 
@@ -122,31 +126,59 @@ def price_before_24hr(client,symbol) -> float:
     '''
         * This function return the before 24hr price value the symbol.
 
-        - Example:  BTCUSDT -> 62000 ($) Float
+        - Input
+        * Coin market: BTCUSDT
+
+        - Outputs
+        * before 24hr price -> Float
         '''
     return float(client.ticker_24hr(symbol)['openPrice'])
 
 def price_change24(client,symbol) -> float:
     """
     * Get 24hr Ticker Price Change value
+
+    - Input
+        * Coin market: BTCUSDT
+    
+    - Outputs
+        * 24hr price change -> Float
     """
     return float(client.ticker_24hr(symbol)['priceChange'])
 
 def price_high24(client,symbol) -> float:
     """
     * Get 24hr Ticker Price High value
+
+    - Input
+        * Coin market: BTCUSDT
+    
+    - Outputs
+        * 24hr High price -> Float
     """
     return float(client.ticker_24hr(symbol)['highPrice'])
 
 def price_low24(client,symbol) -> float:
     """
     * Get 24hr Ticker Price Low value
+
+    - Input
+        * Coin market: BTCUSDT
+    
+    - Outputs
+        * 24hr Low price -> Float
     """
     return float(client.ticker_24hr(symbol)['lowPrice'])
 
 def price_change_percent24(client,symbol) -> float:
     """
     * Get 24hr Ticker Price Change Percent (%)
+
+    - Input
+        * Coin market: BTCUSDT
+
+    - Outputs
+        * 24hr Price Change Percent -> Float
     """
     return float(client.ticker_24hr(symbol)['priceChangePercent'])
 
@@ -157,3 +189,59 @@ def candlesticks(client,symbol,time,count) -> list:
     - time : 1m, 15m 1h , 4h , 1d , 1w ...
     """
     return client.klines(symbol, time, count)
+
+def market_buy_with_price(client,market,symbol,price) -> bool:
+    """
+    * New order to buy coin with MARKET price (Use to price).
+
+    For Example: BTCUSDT -> market_buy_with_price(client,BTCUSDT,USDT,150) You will get $150 BTC
+
+    - Input
+        * market --> BTCUSDT , BTCBNB, BTCETH...
+        * symbol --> USDT , BNB , ETH...
+        * price -->  560 , 0.323, 22...
+
+    - Outputs
+        * if success to order return --> True
+
+    """
+    balance = quantity_free(client,symbol)
+    if balance >= price:
+        params = {
+            "symbol": market,
+            "side": "BUY",
+            "type": "MARKET",
+            "quoteOrderQty":str(price),
+        }
+        client.new_order(**params)
+        return True
+    
+    raise Exception(f"You don't have enough balance ({symbol}:{balance}) to buy this coin.")
+
+def market_buy_with_quantity(client,market,symbol,quantity):
+    """
+    * New order to buy coin with MARKET price (Use to quantity).
+
+    For Example: BTCUSDT -> market_buy_with_price(client,BTCUSDT,USDT,0.01234) You will get 0.01234 BTC
+
+    - Input
+        * market --> BTCUSDT , BTCBNB, BTCETH...
+        * symbol --> USDT , BNB , ETH...
+        * quantity -->  560 , 0.323, 22...
+
+    - Outputs
+        * if success to order return --> True
+    """
+
+    balance = quantity_free(client,symbol)
+    try:
+        params = {
+            "symbol": market,
+            "side": "BUY",
+            "type": "MARKET",
+            "quantity":str(quantity),
+        }
+        client.new_order(**params)
+        return True
+    except:
+        raise Exception(f"You don't have enough balance ({symbol}:{balance}) to buy this coin.")
