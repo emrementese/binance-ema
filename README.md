@@ -40,25 +40,23 @@ Firstly, for the use this library you have to create an API via Binance. This do
 - You can download and start using and developing the library now.
 - Don't forget to sen message me for any mistake. Don't forget give star. I waiting for your pull requests (Forks) :)
 
-## tests
+## Example connect to API & Info Functions
 ```py
 
-# example connect to API
+# Example connect to API & Info Functions
 
 from binance.spot import Spot
-from binancema.indicators import indicator
 from binancema.coininfo import *
 
 KEY         = "XXXXXXXXXXXXXXXXXXXXXX"
 SECRET      = "XXXXXXXXXXXXXXXXXXXXXX"
 
 Client = Spot(KEY,SECRET)  # connect binance api
-functions = indicator(Client) #connect the binance-ema libary
 
-# default binance-connector
+# default binance-connector functions
 print(f"Server Time: {Client.time()['serverTime']}")
 
-# use libary binancema
+# use libary binancema functions
 print(f"Your USDT ($) Balance:                  {balance_usdt(Client)} $")
 print(f"OXT Quantity (Free):                    {quantity_free(Client,'OXT')} OXT")
 print(f"OXT Quantity (locked):                  {quantity_locked(Client,'OXT')} OXT")
@@ -74,6 +72,9 @@ print(f"OXT/USDT Price High Value (24hr):       {price_high24(Client,'OXTUSDT')}
 print(f"OXT/USDT Price Low Value (24hr):        {price_low24(Client,'OXTUSDT')}")
 
 ```
+## Example Indicator Functions
+
+   coming soon
 
 # License
 

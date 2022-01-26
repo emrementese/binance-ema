@@ -5,18 +5,16 @@ Coding with Python.
 '''
 
 from binance.spot import Spot
-from binancema.indicators import indicator
 from binancema.coininfo import *
 
 KEY         = "XXXXXXXXXXXXXXXXXXXXXX"
 SECRET      = "XXXXXXXXXXXXXXXXXXXXXX"
 
 Client = Spot(KEY,SECRET)  # connect binance api
-functions = indicator(Client) #connect the binance-ema libary
 
 # default binance-connector
-
 print(f"Server Time: {Client.time()['serverTime']}")
+
 #Client.depth("OXTUSDT", limit=10)
 
 # use libary binancema
