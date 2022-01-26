@@ -3,7 +3,7 @@
 Created by Emre MENTESE on 24/01/2022
 Coding with Python.
 '''
-from coininfo import price
+from binancema.coininfo import price
 class indicator:
 
     def __init__(self,client):
