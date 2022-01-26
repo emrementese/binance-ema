@@ -1,10 +1,20 @@
 # binance-ema
-Exchange indicators &amp; Basic functions for Binance API.
+Simplified & Professional Binance API.
+                      
+- Get crypto coin information in an easy way.
+- Get account information (balance,quantity etc.)
+- Buy / Sell / Limit / Stop Loss --> Orders any way.
+- Calculate SMA, EMA, MACD etc. functions (custom indicators)
 
-- https://pypi.org/project/binance-ema/
+           https://pypi.org/project/binance-ema/
+           
+           pip install binance-ema
+           
+# Nots
 - This python library has been written to calculate SMA, EMA, MACD etc. functions with Binance API.
 - Complex functions in the Binance API, has been facilitate for developers.
 - After installing the libary, don't forget reading the funcions content !
+- We are not responsible the your code mistake
 
 # Usage
 Firstly, for the use this library you have to create an API via Binance. This documentation will help you for create an safe API.
