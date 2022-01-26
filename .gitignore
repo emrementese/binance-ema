@@ -1,4 +1,7 @@
 
+dist
+binance_ema.egg-info/
+
 .DS_Store
 __pycache__
 __pycache__/
