@@ -190,7 +190,7 @@ def candlesticks(client,symbol,time,count) -> list:
     """
     return client.klines(symbol, time, count)
 
-def market_buy_with_price(client,market,symbol,price) -> bool:
+def market_buy_with_price(client,market,symbol,price) -> dict:
     """
     * New order to buy coin with MARKET price (Use to price).
 
@@ -202,23 +202,28 @@ def market_buy_with_price(client,market,symbol,price) -> bool:
         * price -->  560 , 0.323, 22...
 
     - Outputs
-        * if success to order return --> True
+        * if success to order return order info dict
 
     """
-    balance = quantity_free(client,symbol)
-    if balance >= price:
-        params = {
-            "symbol": market,
-            "side": "BUY",
-            "type": "MARKET",
-            "quoteOrderQty":str(price),
-        }
-        client.new_order(**params)
-        return True
-    
-    raise Exception(f"You don't have enough balance ({symbol}:{balance}) to buy this coin.")
+    try:
+        balance = quantity_free(client,symbol)
+        if balance >= price:
+            params = {
+                "symbol": market,
+                "side": "BUY",
+                "type": "MARKET",
+                "quoteOrderQty":str(price),
+            }
+            response = client.new_order(**params)
+            return {"buy_price":response['fills']['price'],"qty":response['fills']['qty'],"comission":response['fills']['commission']}
+        
+        raise Exception(f"You don't have enough balance to buy this coin ({symbol}:{balance})")
 
-def market_buy_with_quantity(client,market,symbol,quantity):
+    except Exception as e:
+        print(e)
+        return False
+        
+def market_buy_with_quantity(client,market,quantity) -> dict:
     """
     * New order to buy coin with MARKET price (Use to quantity).
 
@@ -230,10 +235,8 @@ def market_buy_with_quantity(client,market,symbol,quantity):
         * quantity -->  560 , 0.323, 22...
 
     - Outputs
-        * if success to order return --> True
+        * if success to order return order info dict
     """
-
-    balance = quantity_free(client,symbol)
     try:
         params = {
             "symbol": market,
@@ -241,7 +244,8 @@ def market_buy_with_quantity(client,market,symbol,quantity):
             "type": "MARKET",
             "quantity":str(quantity),
         }
-        client.new_order(**params)
-        return True
-    except:
-        raise Exception(f"You don't have enough balance ({symbol}:{balance}) to buy this coin.")
+        response = client.new_order(**params)
+        return {"buy_price":response['fills']['price'],"qty":response['fills']['qty'],"comission":response['fills']['commission']}
+    except Exception as e:
+        print(e)
+        return False

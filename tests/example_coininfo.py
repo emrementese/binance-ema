@@ -15,6 +15,11 @@ Client = Spot(KEY,SECRET)  # connect binance api
 symbol = "OXT"
 market = "OXTUSDT"
 
+# TRADE 
+print(market_buy_with_price(Client, market, "USDT",30)) # buy 30 $ BTC (market price)
+
+print(market_buy_with_quantity(Client, market,0.01233)) # buy 0.01233 BTC (market price)
+
 # default binance-connector functions
 print(f"Server Time: {Client.time()['serverTime']}\n") # get server time
 

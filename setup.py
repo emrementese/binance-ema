@@ -9,7 +9,7 @@ NAME = "binance-ema"
 DESCRIPTION = ("Get crypto coin informations & calculate the custom or constant indicators. (WITH BINANCE API)")
 AUTHOR = "Emre MENTESE"
 URL = "https://github.com/emrementese/binance-ema"
-VERSION = "0.1.3"
+VERSION = "0.1.4"
 
 setup(
     name=NAME,
