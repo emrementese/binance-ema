@@ -1,5 +1,12 @@
+
 .DS_Store
-.env
-env
-/env
 __pycache__
+__pycache__/
+
+# Virtual Environments
+.env
+.venv
+env
+venv
+env/
+venv/
