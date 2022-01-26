@@ -65,14 +65,7 @@ Client = Spot(KEY,SECRET)  # connect binance api
 symbol = "OXT"
 market = "OXTUSDT"
 
-# default binance-connector functions
-print(f"Server Time: {Client.time()['serverTime']}\n") # get server time
 
-print(f"All Open Orders (LIMIT): {Client.get_open_orders()}\n") #list
-
-print(f"OXT Open Orders (LIMIT): {Client.get_open_orders(market)}\n") #list
-
-print(f"Get only 1 order:{Client.get_order(market,orderId = 55555)} \n") # dict (inpur order id gettin to get_open_orders)
 
 # use libary binancema functions
 print(f"Your USDT ($) Balance:                  {balance_usdt(Client)} $\n")              #float
@@ -102,9 +95,32 @@ print(f"OXT/USDT Price High Value (24hr):       {price_high24(Client,market)}\n"
 print(f"OXT/USDT Price Low Value (24hr):        {price_low24(Client,market)}\n")        #float
 
 ```
-## Example Indicator Functions
+## Example Trade Functions
+```py
 
-   coming soon
+from binance.spot import Spot
+from binancema.coininfo import *
+
+KEY         = "XXXXXXXXXXXXXXXXXXXXXX"
+SECRET      = "XXXXXXXXXXXXXXXXXXXXXX"
+
+Client = Spot(KEY,SECRET)  # connect binance api
+
+symbol = "OXT"
+market = "OXTUSDT"
+
+# TRADE with binance-ema
+print(market_buy_with_price(Client, market, "USDT",30)) # buy 30 $ BTC (market price)
+
+print(market_buy_with_quantity(Client, market,0.01233)) # buy 0.01233 BTC (market price)
+
+# default binance-connector functions
+print(f"All Open Orders (LIMIT): {Client.get_open_orders()}\n") #list
+
+print(f"OXT Open Orders (LIMIT): {Client.get_open_orders(market)}\n") #list
+
+print(f"Get only 1 order:{Client.get_order(market,orderId = 55555)} \n") # dict (inpur order id gettin to get_open_orders)
+```
 
 # License
 
