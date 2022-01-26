@@ -1,4 +1,4 @@
-from setuptools import setup
+from setuptools import setup, find_packages
 import os
 path = os.path.join(os.path.dirname(__file__),"requirements.txt")
 
@@ -28,11 +28,13 @@ setup(
     url=URL,
     keywords=["Binance", "Public API","EMA","MACD","TRADE","Crypto","Coin","Indicators","BTC","ETH","USDT"],
     install_requires=[req for req in requirements],
-    packages='binancema',
+    packages=find_packages('binancema'),
+    package_dir={'': 'binancema'},
     classifiers=[
         "Intended Audience :: Developers",
         "Intended Audience :: Financial and Insurance Industry",
         "License :: OSI Approved :: MIT License",
+        "Operating System :: OS Independent",
         "Programming Language :: Python :: 3.6",
         "Programming Language :: Python :: 3.7",
         "Programming Language :: Python :: 3.8",
