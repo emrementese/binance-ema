@@ -4,6 +4,8 @@ Created by Emre MENTESE on 24/01/2022
 Coding with Python.
 '''
 
+import math
+
 def decorator_quantity(func):
     def inner(client,symbol):
         Account = client.account()
@@ -12,6 +14,10 @@ def decorator_quantity(func):
                 continue
             return func(client,symbol,coin = coin)
     return inner
+
+def round_stepsize(value, step_size) -> float:
+    precision: int = int(round(-math.log(step_size, 10), 0))
+    return float(round(value, precision))
 
 @decorator_quantity
 def quantity_free(client,symbol,coin = None) -> float:
@@ -187,36 +193,55 @@ def candlesticks(client,symbol,time,count) -> list:
     """
     return client.klines(symbol, time, count)
 
-def market_buy_with_price(client,market,symbol,price) -> dict:
+def market_buy_with_price(client,market,price) -> dict:
     """
     * New order to buy coin with MARKET price (Use to price).
 
     For Example: BTCUSDT -> market_buy_with_price(client,BTCUSDT,USDT,150) You will get $150 BTC
 
     - Input
-        * market --> BTCUSDT , BTCBNB, BTCETH...
-        * symbol --> USDT , BNB , ETH...
-        * price -->  560 , 0.323, 22...
+        * market --> BTCUSDT , BTCBNB, BTCETH... (str)
+        * price -->  560 $ , 0.323 BNB, 22 ETH... (float)
 
     - Outputs
         * if success to order return order info dict
+        {'buy_price': '372.90000000', 'qty': '0.00100000', 'comission': '0.00000075'}
 
     """
     try:
-        balance = quantity_free(client,symbol)
-        if balance >= price:
-            params = {
-                "symbol": market,
-                "side": "BUY",
-                "type": "MARKET",
-                "quoteOrderQty":str(price),
-            }
-            response = client.new_order(**params)
-            print(response)
-            return {"buy_price":response['fills'][0]['price'],"qty":response['fills'][0]['qty'],"comission":response['fills'][0]['commission']}
-        
-        raise Exception(f"You don't have enough balance to buy this coin ({symbol}:{balance})")
+        # TRADE RULES CONTROL
 
+        r = client.exchange_info(market)
+        quoteAsset = r['symbols']['quoteAsset']
+
+        # 1- PRICE_FILTER Control
+        minPrice = float(r['symbols'][0]['filters'][0]['minPrice'])
+        maxPrice = float(r['symbols'][0]['filters'][0]['maxPrice'])
+        tickSize = float(r['symbols'][0]['filters'][0]['tickSize'])
+        validated_price = round_stepsize(price,tickSize)
+
+        if (validated_price < minPrice) or (price > maxPrice):
+            raise Exception(f"PRICE_FILTER Error: Price is not in range Min:{minPrice} - Max:{maxPrice}")
+
+        # 2- MIN_NOTIONAL Control
+        minNotional = float(r['symbols'][0]['filters'][3]['minNotional'])
+        if validated_price < minNotional:
+            raise Exception(f"MIN_NOTIONAL Control Error: Minimum Trade Amount: {minNotional} {quoteAsset}")
+
+        # 3- Balance Control
+        balance = quantity_free(client,quoteAsset)
+        if balance < validated_price:
+            raise Exception(f"Balance Control Error: You don't have enough balance to buy this coin ({quoteAsset}:{balance})")
+
+        params = {
+            "symbol": market,
+            "side": "BUY",
+            "type": "MARKET",
+            "quoteOrderQty":str(validated_price),
+        }
+        response = client.new_order(**params)
+        return {"buy_price":response['fills'][0]['price'],"qty":response['fills'][0]['qty'],"comission":response['fills'][0]['commission']}
+        
     except Exception as e:
         print(e)
         return False
@@ -234,8 +259,15 @@ def market_buy_with_quantity(client,market,quantity) -> dict:
 
     - Outputs
         * if success to order return order info dict
+        {'buy_price': '372.90000000', 'qty': '0.00100000', 'comission': '0.00000075'}
     """
+
     try:
+        # TRADE RULES CONTROL
+
+        # Quantity type control
+        if not isinstance(quantity,(int,float)):
+            raise Exception("Quantity Error: Quantity must be float or int.")
         params = {
             "symbol": market,
             "side": "BUY",
@@ -247,3 +279,4 @@ def market_buy_with_quantity(client,market,quantity) -> dict:
     except Exception as e:
         print(e)
         return False
+

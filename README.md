@@ -22,7 +22,7 @@ Firstly, for the use this library you have to create an API via Binance. This do
             
 2) After, click to your profile photo. Select api management from the menu that appears.
 
-   ![](https://github.com/emrementese/binance-ema/blob/main/tests/images/menu.png)
+   ![](https://github.com/emrementese/binance-ema/blob/main/examples/images/menu.png)
 
 
 3) Third, you can create an API now. After the API creatation,  move the API List and click the edit button your API. 
@@ -30,7 +30,7 @@ Firstly, for the use this library you have to create an API via Binance. This do
 - After the API creatation, save your "API KEY" & "SECRET KEY".
 - Page looks like;
 
-   ![](https://github.com/emrementese/binance-ema/blob/main/tests/images/binance-api-settings.png)
+   ![](https://github.com/emrementese/binance-ema/blob/main/examples/images/binance-api-settings.png)
    
 * Enable Reading was default active. This settings give you authority for reading the coins information. (Red circle in the image)
 * Enable Spot-Marign Trading was default passive. !! IF YOU DON'T SPOT-MARGİN TRADİNG, YOU MUST DON'T ACTİVE THİS SETTİNG FOR YOUR SECURİTY. (Green circle in the image)
