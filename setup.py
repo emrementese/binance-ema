@@ -9,7 +9,7 @@ NAME = "binance-ema"
 DESCRIPTION = ("Get crypto coin informations & calculate the custom or constant indicators. (WITH BINANCE API)")
 AUTHOR = "Emre MENTESE"
 URL = "https://github.com/emrementese/binance-ema"
-VERSION = "0.1.6"
+VERSION = "0.1.7"
 URLS = {
   'MyWebsite': 'http://www.emrementese.com/',
   'Github': 'https://github.com/emrementese',
@@ -32,8 +32,8 @@ setup(
     install_requires=[
         "binance-connector==1.10.0",
     ],
-    packages=find_packages('binancema'),
-    package_dir={'':'binancema'},
+    packages=find_packages('src'),
+    package_dir={'':'src'},
     classifiers=[
         "Intended Audience :: Developers",
         "Intended Audience :: Financial and Insurance Industry",

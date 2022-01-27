@@ -16,7 +16,7 @@ symbol = "OXT"
 market = "OXTUSDT"
 
 # TRADE 
-print(market_buy_with_price(Client, market, "USDT",30)) # buy 30 $ BTC (market price)
+print(market_buy_with_price(Client, market,30)) # buy 30 $ BTC (market price)
 
 print(market_buy_with_quantity(Client, market,0.01233)) # buy 0.01233 BTC (market price)
 
