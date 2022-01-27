@@ -4,9 +4,6 @@ Created by Emre MENTESE on 24/01/2022
 Coding with Python.
 '''
 
-from lib2to3.pygram import Symbols
-
-
 def decorator_quantity(func):
     def inner(client,symbol):
         Account = client.account()
@@ -215,7 +212,8 @@ def market_buy_with_price(client,market,symbol,price) -> dict:
                 "quoteOrderQty":str(price),
             }
             response = client.new_order(**params)
-            return {"buy_price":response['fills']['price'],"qty":response['fills']['qty'],"comission":response['fills']['commission']}
+            print(response)
+            return {"buy_price":response['fills'][0]['price'],"qty":response['fills'][0]['qty'],"comission":response['fills'][0]['commission']}
         
         raise Exception(f"You don't have enough balance to buy this coin ({symbol}:{balance})")
 
@@ -245,7 +243,7 @@ def market_buy_with_quantity(client,market,quantity) -> dict:
             "quantity":str(quantity),
         }
         response = client.new_order(**params)
-        return {"buy_price":response['fills']['price'],"qty":response['fills']['qty'],"comission":response['fills']['commission']}
+        return {"buy_price":response['fills'][0]['price'],"qty":response['fills'][0]['qty'],"comission":response['fills'][0]['commission']}
     except Exception as e:
         print(e)
         return False
