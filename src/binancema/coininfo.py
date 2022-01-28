@@ -5,6 +5,7 @@ Coding with Python.
 '''
 
 import math
+from typing import Union
 
 def decorator_quantity(func):
     def inner(client,symbol):
@@ -15,12 +16,15 @@ def decorator_quantity(func):
             return func(client,symbol,coin = coin)
     return inner
 
-def round_stepsize(value, step_size) -> float:
+def round_stepsize(value: Union[int,float], step_size: Union[int,float]) -> float:
+    """
+    * Round value to step_size for Trade Rules.
+    """
     precision: int = int(round(-math.log(step_size, 10), 0))
     return float(round(value, precision))
 
 @decorator_quantity
-def quantity_free(client,symbol,coin = None) -> float:
+def quantity_free(client,symbol:str,coin = None) -> float:
     '''
     * Get your coins free quantitiy.
 
@@ -33,7 +37,7 @@ def quantity_free(client,symbol,coin = None) -> float:
     return float(coin['free'])
 
 @decorator_quantity
-def quantity_locked(client,symbol,coin = None) -> float:
+def quantity_locked(client,symbol:str,coin = None) -> float:
     '''
     * Get your coins locked quantitiy.
 
@@ -46,7 +50,7 @@ def quantity_locked(client,symbol,coin = None) -> float:
     return float(coin['locked'])
 
 @decorator_quantity
-def quantity_all(client,symbol,coin = None) -> float:
+def quantity_all(client,symbol:str,coin = None) -> float:
     '''
     * Get your coins all (locked + free) quantitiy.
 
@@ -59,7 +63,7 @@ def quantity_all(client,symbol,coin = None) -> float:
     return float(coin['locked']) + float(coin['free'])
 
 @decorator_quantity
-def balance_free(client,symbol,coin = None) -> float:
+def balance_free(client,symbol:str,coin = None) -> float:
     '''
     * Get your coins free balance $ (Instant Price USDT).
 
@@ -74,7 +78,7 @@ def balance_free(client,symbol,coin = None) -> float:
     return balance
 
 @decorator_quantity
-def balance_locked(client,symbol,coin = None) -> float:
+def balance_locked(client,symbol:str,coin = None) -> float:
     '''
     * Get your coins locked balance $ (Instant Price USDT).
 
@@ -89,7 +93,7 @@ def balance_locked(client,symbol,coin = None) -> float:
     return balance
 
 @decorator_quantity
-def balance_all(client,symbol,coin = None) -> float:
+def balance_all(client,symbol: str,coin = None) -> float:
     '''
     * Get your coins all (locked + free) balance $ (Instant Price USDT).
 
@@ -113,7 +117,7 @@ def balance_usdt(client) -> float:
             continue
         return float(coin['free'])
 
-def price(client,symbol) -> float:
+def price(client,symbol:str) -> float:
     '''
     * This function return the instant price value the symbol.
 
@@ -125,7 +129,7 @@ def price(client,symbol) -> float:
     '''
     return float(client.ticker_price(symbol)['price'])
 
-def price_before_24hr(client,symbol) -> float:
+def price_before_24hr(client,symbol:str) -> float:
     '''
         * This function return the before 24hr price value the symbol.
 
@@ -137,7 +141,7 @@ def price_before_24hr(client,symbol) -> float:
         '''
     return float(client.ticker_24hr(symbol)['openPrice'])
 
-def price_change24(client,symbol) -> float:
+def price_change24(client,symbol:str) -> float:
     """
     * Get 24hr Ticker Price Change value
 
@@ -149,7 +153,7 @@ def price_change24(client,symbol) -> float:
     """
     return float(client.ticker_24hr(symbol)['priceChange'])
 
-def price_high24(client,symbol) -> float:
+def price_high24(client,symbol:str) -> float:
     """
     * Get 24hr Ticker Price High value
 
@@ -161,7 +165,7 @@ def price_high24(client,symbol) -> float:
     """
     return float(client.ticker_24hr(symbol)['highPrice'])
 
-def price_low24(client,symbol) -> float:
+def price_low24(client,symbol:str) -> float:
     """
     * Get 24hr Ticker Price Low value
 
@@ -173,7 +177,7 @@ def price_low24(client,symbol) -> float:
     """
     return float(client.ticker_24hr(symbol)['lowPrice'])
 
-def price_change_percent24(client,symbol) -> float:
+def price_change_percent24(client,symbol: str) -> float:
     """
     * Get 24hr Ticker Price Change Percent (%)
 
@@ -185,7 +189,7 @@ def price_change_percent24(client,symbol) -> float:
     """
     return float(client.ticker_24hr(symbol)['priceChangePercent'])
 
-def candlesticks(client,symbol,time,count) -> list:
+def candlesticks(client,symbol:str,time,count) -> list:
     """
     * Get candlestick data for the given symbol graph.
 
@@ -193,48 +197,55 @@ def candlesticks(client,symbol,time,count) -> list:
     """
     return client.klines(symbol, time, count)
 
-def market_buy_with_price(client,market,price) -> dict:
+def market_buy_with_price(client,symbol:str,price:Union[int,float]) -> Union[bool,dict]:
     """
     * New order to buy coin with MARKET price (Use to price).
 
     For Example: BTCUSDT -> market_buy_with_price(client,BTCUSDT,USDT,150) You will get $150 BTC
 
     - Input
-        * market --> BTCUSDT , BTCBNB, BTCETH... (str)
+        * symbol --> BTCUSDT , BTCBNB, BTCETH... (str)
         * price -->  560 $ , 0.323 BNB, 22 ETH... (float)
 
     - Outputs
         * if success to order return order info dict
         {'buy_price': '372.90000000', 'qty': '0.00100000', 'comission': '0.00000075'}
-
+        * else fail to order return False
     """
     try:
         # TRADE RULES CONTROL
 
-        r = client.exchange_info(market)
+        # 1- Input Type control 
+        if not isinstance(symbol,str):
+            raise Exception("Type Error: symbol must be str (BTCUSDT etc.).")
+
+        if not isinstance(price,(int,float)):
+            raise Exception("Type Error: Price must be float or int.")
+
+        r = client.exchange_info(symbol)
         quoteAsset = r['symbols'][0]['quoteAsset']
 
-        # 1- PRICE_FILTER Control
+        # 2- PRICE_FILTER Control
         minPrice = float(r['symbols'][0]['filters'][0]['minPrice'])
         maxPrice = float(r['symbols'][0]['filters'][0]['maxPrice'])
         tickSize = float(r['symbols'][0]['filters'][0]['tickSize'])
         validated_price = round_stepsize(price,tickSize)
 
-        if (validated_price < minPrice) or (price > maxPrice):
+        if (validated_price < minPrice) or (validated_price > maxPrice):
             raise Exception(f"PRICE_FILTER Error: Price is not in range Min:{minPrice} - Max:{maxPrice}")
 
-        # 2- MIN_NOTIONAL Control
+        # 3- MIN_NOTIONAL Control
         minNotional = float(r['symbols'][0]['filters'][3]['minNotional'])
         if validated_price < minNotional:
-            raise Exception(f"MIN_NOTIONAL Control Error: Minimum Trade Amount: {minNotional} {quoteAsset}")
+            raise Exception(f"MIN_NOTIONAL Error: Minimum Trade Amount: {minNotional} {quoteAsset}")
 
-        # 3- Balance Control
+        # 4- Balance Control
         balance = quantity_free(client,quoteAsset)
         if balance < validated_price:
-            raise Exception(f"Balance Control Error: You don't have enough balance to buy this coin ({quoteAsset}:{balance})")
+            raise Exception(f"Balance Error: You don't have enough balance to buy this coin ({quoteAsset}:{balance})")
 
         params = {
-            "symbol": market,
+            "symbol": symbol,
             "side": "BUY",
             "type": "MARKET",
             "quoteOrderQty":str(validated_price),
@@ -246,14 +257,14 @@ def market_buy_with_price(client,market,price) -> dict:
         print(e)
         return False
         
-def market_buy_with_quantity(client,market,quantity) -> dict:
+def market_buy_with_quantity(client,symbol:str,quantity:Union[int,float]) -> Union[bool,dict]:
     """
     * New order to buy coin with MARKET price (Use to quantity).
 
     For Example: BTCUSDT -> market_buy_with_price(client,BTCUSDT,USDT,0.01234) You will get 0.01234 BTC
 
     - Input
-        * market --> BTCUSDT , BTCBNB, BTCETH...
+        * symbol --> BTCUSDT , BTCBNB, BTCETH...
         * symbol --> USDT , BNB , ETH...
         * quantity -->  560 , 0.323, 22...
 
@@ -265,11 +276,14 @@ def market_buy_with_quantity(client,market,quantity) -> dict:
     try:
         # TRADE RULES CONTROL
 
-        # Quantity type control
+        # Input type control
+        if not isinstance(symbol,str):
+            raise Exception("Type Error: symbol must be str (BTCUSDT etc.).")
+
         if not isinstance(quantity,(int,float)):
             raise Exception("Quantity Error: Quantity must be float or int.")
         params = {
-            "symbol": market,
+            "symbol": symbol,
             "side": "BUY",
             "type": "MARKET",
             "quantity":str(quantity),
