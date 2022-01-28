@@ -212,7 +212,7 @@ def market_buy_with_price(client,market,price) -> dict:
         # TRADE RULES CONTROL
 
         r = client.exchange_info(market)
-        quoteAsset = r['symbols']['quoteAsset']
+        quoteAsset = r['symbols'][0]['quoteAsset']
 
         # 1- PRICE_FILTER Control
         minPrice = float(r['symbols'][0]['filters'][0]['minPrice'])
