@@ -189,6 +189,18 @@ def price_change_percent24(client,symbol: str) -> float:
     """
     return float(client.ticker_24hr(symbol)['priceChangePercent'])
 
+def price_average(client,symbol: str) -> float:
+    """
+    * Get Average Price value
+
+    - Input
+        * Coin market: BTCUSDT
+
+    - Outputs
+        * 24hr Price Change Percent -> Float
+    """
+    return float(client.avg_price(symbol)['price'])
+
 def candlesticks(client,symbol:str,time,count) -> list:
     """
     * Get candlestick data for the given symbol graph.
@@ -232,7 +244,7 @@ def market_buy_with_price(client,symbol:str,price:Union[int,float]) -> Union[boo
         validated_price = round_stepsize(price,tickSize)
 
         if (validated_price < minPrice) or (validated_price > maxPrice):
-            raise Exception(f"PRICE_FILTER Error: Price is not in range Min:{minPrice} - Max:{maxPrice}")
+            raise Exception(f"PRICE_FILTER Error: Price is not in range Min: {minPrice} - Max: {maxPrice}")
 
         # 3- MIN_NOTIONAL Control
         minNotional = float(r['symbols'][0]['filters'][3]['minNotional'])
@@ -276,12 +288,46 @@ def market_buy_with_quantity(client,symbol:str,quantity:Union[int,float]) -> Uni
     try:
         # TRADE RULES CONTROL
 
-        # Input type control
+        # 1- Input type control
         if not isinstance(symbol,str):
             raise Exception("Type Error: symbol must be str (BTCUSDT etc.).")
 
         if not isinstance(quantity,(int,float)):
             raise Exception("Quantity Error: Quantity must be float or int.")
+
+        r = client.exchange_info(symbol)
+        quoteAsset = r['symbols'][0]['quoteAsset']
+
+        # 2- LOT_SIZE Control
+
+        # Market Lot Size
+        minQty = float(r['symbols'][0]['filters'][5]['minQty'])
+        maxQty = float(r['symbols'][0]['filters'][5]['maxQty'])
+        stepSize = float(r['symbols'][0]['filters'][5]['stepSize'])
+
+        #  if not has got marektlosize , use to Order Lot Size
+        if minQty == 0:
+            minQty = float(r['symbols'][0]['filters'][2]['minQty'])
+        if maxQty == 0:
+            maxQty = float(r['symbols'][0]['filters'][2]['maxQty'])
+        if stepSize == 0:
+            stepSize = float(r['symbols'][0]['filters'][2]['stepSize'])
+
+        validated_quantity = round_stepsize(quantity,stepSize)
+
+        if (validated_quantity < minQty) or (validated_quantity > maxQty):
+            raise Exception(f"LOT_SIZE Error: Quantity is not in range Min: {minQty} - Max: {maxQty}")
+
+
+        # 3- MIN_NOTIONAL Control
+        minNotional = float(r['symbols'][0]['filters'][3]['minNotional'])
+
+        price_now = price_average(client,symbol)
+        balance = price_now * validated_quantity
+
+        if balance < minNotional:
+            raise Exception(f"MIN_NOTIONAL Error: Minimum Trade Amount: {minNotional} {quoteAsset}")
+       
         params = {
             "symbol": symbol,
             "side": "BUY",
