@@ -318,7 +318,6 @@ def market_buy_with_quantity(client,symbol:str,quantity:Union[int,float]) -> Uni
         if (validated_quantity < minQty) or (validated_quantity > maxQty):
             raise Exception(f"LOT_SIZE Error: Quantity is not in range Min: {minQty} - Max: {maxQty}")
 
-
         # 3- MIN_NOTIONAL Control
         minNotional = float(r['symbols'][0]['filters'][3]['minNotional'])
 
@@ -327,6 +326,12 @@ def market_buy_with_quantity(client,symbol:str,quantity:Union[int,float]) -> Uni
 
         if balance < minNotional:
             raise Exception(f"MIN_NOTIONAL Error: Minimum Trade Amount: {minNotional} {quoteAsset}")
+
+        # 4- Balance Control
+        balance_control = quantity_free(client,quoteAsset)
+
+        if balance > balance_control:
+            raise Exception(f"Balance Error: You don't have enough balance to buy this coin ({quoteAsset}:{balance_control})")
        
         params = {
             "symbol": symbol,
