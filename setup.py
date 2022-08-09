@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 about = {}
 
-with open("README.md", "r") as readme_file:
+with open("README.md", "r",encoding='UTF-8') as readme_file:
     readme = readme_file.read()
 
 NAME = "binance-ema"
