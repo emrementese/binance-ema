@@ -1,0 +1,43 @@
+[project]
+name = "binance-ema"
+version = "1.0.0"
+description = "Get crypto coin informations & calculate the custom or constant indicators. (WITH BINANCE API)"
+package-mode = true
+license = { file = "LICENSE" }
+readme = "README.md"
+keywords=["Binance", "Public API","EMA","MACD","TRADE","Crypto","Coin","Indicators","BTC","ETH","USDT"]
+classifiers=[
+        "Intended Audience :: Developers",
+        "Intended Audience :: Financial and Insurance Industry",
+        "License :: OSI Approved :: MIT License",
+        "Operating System :: OS Independent",
+        "Programming Language :: Python :: 3.10",
+]
+authors = [
+    {name = "Emre MENTEŞE",email = "emrementese@gmail.com"}
+]
+maintainers = [
+    {"name" = "Emre MENTEŞE", "email"= "emrementese@gmail.com"},
+]
+
+
+requires-python = ">=3.10"
+dependencies = [
+    "binance-connector (==1.10.0)"
+]
+
+[tool.poetry]
+packages = [
+    { include = "binancema", from = "src" }
+]
+
+[project.urls]
+homepage = "https://github.com/emrementese/binance-ema"
+"Github" = "https://github.com/emrementese"
+"Source" = "https://github.com/emrementese/binance-ema"
+"Download" = "https://pypi.org/project/binance-ema/#files"
+
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"

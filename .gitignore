@@ -17,3 +17,5 @@ venv/
 # IDE
 .vscode/
 .vscode
+
+poetry.lock
