@@ -23,7 +23,8 @@ maintainers = [
 
 requires-python = ">=3.10"
 dependencies = [
-    "binance-connector (==1.10.0)"
+    "binance-connector (==1.10.0)",
+    "pre-commit (>=4.0.1,<5.0.0)"
 ]
 
 [tool.poetry]
