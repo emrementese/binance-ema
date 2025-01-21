@@ -1,6 +1,6 @@
 [project]
 name = "binance-ema"
-version = "1.0.0"
+version = "1.0.1"
 description = "Get crypto coin informations & calculate the custom or constant indicators. (WITH BINANCE API)"
 package-mode = true
 license = { file = "LICENSE" }
